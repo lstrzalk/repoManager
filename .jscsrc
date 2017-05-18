@@ -5,6 +5,7 @@
   "excludeFiles": [
     "views/**",
     "node_modules/**",
-    "config/env/**"
+    "config/env/**",
+    "db/models/**"
   ]
 }
