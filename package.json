@@ -1,0 +1,38 @@
+{
+  "name": "repo_manager",
+  "version": "1.0.0",
+  "description": "Simple wrapper for many different git hubs like bitbucket, gitlab or github",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "github",
+    "gitlab",
+    "bitbucket",
+    "wrapper",
+    "nodeJS",
+    "ReactJS",
+    "Express",
+    "Passport"
+  ],
+  "author": "Łukasz Strzałka, Tomasz Guzik",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.6",
+    "express": "~4.15.0",
+    "express-session": "^1.15.2",
+    "logger": "0.0.1",
+    "mongoose": "^4.8.6",
+    "morgan": "^1.8.1",
+    "nodemon": "~1.11.0",
+    "passport": "^0.3.2",
+    "passport-github": "^1.1.0",
+    "passport-github2": "^0.1.10",
+    "path": "^0.12.7",
+    "socket.io": "^1.7.3"
+  }
+}
