@@ -1,6 +1,6 @@
-const express = require("./config/express.js");
-const mongoose = require("./config/mongoose.js");
+const express = require('./config/express.js');
+const mongoose = require('./config/mongoose.js');
 
-const db = mongoose();
+mongoose();
 const app = express();
 module.exports = app;

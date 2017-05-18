@@ -1,0 +1,10 @@
+{
+  "preset": "google",
+  "fileExtensions": [".js"],
+  "maxErrors": 100,
+  "excludeFiles": [
+    "views/**",
+    "node_modules/**",
+    "config/env/**"
+  ]
+}

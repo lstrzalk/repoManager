@@ -1,15 +1,16 @@
 'use strict';
 const config = require('../config/config');
 const passport = require('passport');
-const GithubStrategy = require('passport-github2').Strategy;
+const BitbucketStrategy = require('passport-bitbucket-oauth2').Strategy;
 const User = require('../db/models/user');
 const init = require('./init');
-passport.use(new GithubStrategy({
-    clientID: config.githubClienId,
-    clientSecret: config.githubClientSecret,
-    callbackURL: 'http://localhost:3000/auth/github/callback'
+passport.use(new BitbucketStrategy({
+    clientID: config.bitbucketClienId,
+    clientSecret: config.bitbucketClientSecret,
+    callbackURL: 'http://localhost:3000/auth/bitbucket/callback'
   }, function(accessToken, refreshToken, profile, done) {
         console.log(profile._json);
+        //https://api.bitbucket.org/2.0/repositories/lukstr
         let searchQuery = {
             name: profile.displayName
           };

@@ -1,0 +1,15 @@
+{
+  "undef": true,
+  "unused": true,
+  "esversion": 6,
+  "node": true,
+  "strict": true,
+  "camelcase": false,
+  "globalstrict": false,
+  "curly": true,
+  "eqeqeq": true,
+  "quotmark":"single",
+  "globals": {
+    "MY_GLOBAL": true
+  }
+}

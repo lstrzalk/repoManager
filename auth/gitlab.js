@@ -1,13 +1,13 @@
 'use strict';
 const config = require('../config/config');
 const passport = require('passport');
-const GithubStrategy = require('passport-github2').Strategy;
+const GitlabStrategy = require('passport-gitlab2').Strategy;
 const User = require('../db/models/user');
 const init = require('./init');
-passport.use(new GithubStrategy({
-    clientID: config.githubClienId,
-    clientSecret: config.githubClientSecret,
-    callbackURL: 'http://localhost:3000/auth/github/callback'
+passport.use(new GitlabStrategy({
+    clientID: config.gitlabClientId,
+    clientSecret: config.gitlabClientSecret,
+    callbackURL: 'http://localhost:3000/auth/gitlab/callback'
   }, function(accessToken, refreshToken, profile, done) {
         console.log(profile._json);
         let searchQuery = {

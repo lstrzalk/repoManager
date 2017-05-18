@@ -5,8 +5,16 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "jshint": "jshint .",
+    "jscs": "jscs . --fix",
+    "lint": "jshint .",
+    "validate": "npm ls"
   },
+  "pre-commit": [
+    "jshint",
+    "jscs"
+  ],
   "keywords": [
     "github",
     "gitlab",
@@ -30,9 +38,17 @@
     "morgan": "^1.8.1",
     "nodemon": "~1.11.0",
     "passport": "^0.3.2",
+    "passport-bitbucket-oauth2": "^0.1.2",
     "passport-github": "^1.1.0",
     "passport-github2": "^0.1.10",
+    "passport-gitlab2": "^3.0.0",
     "path": "^0.12.7",
+    "request": "^2.81.0",
     "socket.io": "^1.7.3"
+  },
+  "devDependencies": {
+    "passport-bitbucket-oauth2": "^0.1.2",
+    "passport-gitlab2": "^3.0.0",
+    "precommit-hook": "^3.0.0"
   }
 }
