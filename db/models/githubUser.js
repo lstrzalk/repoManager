@@ -37,6 +37,9 @@ const GithubUser = new Schema({
   disk_usage: Number,
   collaborators: Number,
   two_factor_authentication: Boolean,
+  access_token: String,
+  refresh_token: String,
+  user: Schema.Types.ObjectId
 });
 
 module.exports = mongoose.model('githubUsers', GithubUser);

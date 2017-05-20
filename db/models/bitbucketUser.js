@@ -18,7 +18,10 @@ const BitbucketUser = new Schema({
     is_staff: Boolean,
     location: String,
     type: String,
-    uuid: String
+    uuid: String,
+    access_token: String,
+    refresh_token: String,
+    user: Schema.Types.ObjectId
 });
 
 module.exports = mongoose.model('bitbucketUsers', BitbucketUser);

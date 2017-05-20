@@ -20,13 +20,16 @@ const GitlabUser = new Schema({
   confirmed_at: String,
   last_activity_on: String,
   email: String,
-  projects_limit: 100000,
+  projects_limit: Number,
   current_sign_in_at: String,
   identities: Array,
   can_create_group: Boolean,
   can_create_project: Boolean,
   two_factor_enabled: Boolean,
-  external: Boolean 
+  external: Boolean,
+  access_token: String,
+  refresh_token: String,
+  user: Schema.Types.ObjectId
 });
 
 module.exports = mongoose.model('gitlabUsers', GitlabUser);

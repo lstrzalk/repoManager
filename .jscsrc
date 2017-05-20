@@ -6,6 +6,7 @@
     "views/**",
     "node_modules/**",
     "config/env/**",
-    "db/models/**"
+    "db/models/**",
+    "auth/**"
   ]
 }
