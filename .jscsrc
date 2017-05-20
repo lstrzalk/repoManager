@@ -7,6 +7,8 @@
     "node_modules/**",
     "config/env/**",
     "db/models/**",
-    "auth/**"
+    "auth/**",
+    "config/requests.js",
+    "routes/reposRoute.js"
   ]
 }

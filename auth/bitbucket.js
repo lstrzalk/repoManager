@@ -8,15 +8,11 @@ module.exports = (id) => {
   const GithubUser = require('../db/models/githubUser');
   const GitlabUser = require('../db/models/gitlabUser');
   const init = require('./init');
-  // const request = require('request');
   passport.use(new BitbucketStrategy({
       clientID: config.bitbucketClienId,
       clientSecret: config.bitbucketClientSecret,
       callbackURL: 'http://localhost:3000/auth/bitbucket/callback'
     }, function(accessToken, refreshToken, profile, done) {
-          // console.log(profile._json);
-          // console.log(accessToken);
-          // console.log(refreshToken);
           if (id !== null) {
             User.findById(id, function(err, user) {
               if (err) {

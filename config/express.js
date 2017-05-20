@@ -18,6 +18,7 @@ module.exports = () => {
     app.use(express.static('views'));
     require('./passport')(app);
     require('../routes/indexRoute')(app);
+    require('../routes/reposRoute')(app);
     require('../routes/githubRoute')(app);
     require('../routes/gitlabRoute')(app);
     require('../routes/bitbucketRoute')(app);

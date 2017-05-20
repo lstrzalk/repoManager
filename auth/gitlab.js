@@ -8,7 +8,6 @@ module.exports = (userId) => {
   const GithubUser = require('../db/models/githubUser');
   const GitlabUser = require('../db/models/gitlabUser');
   const init = require('./init');
-  // const request = require('request');
   passport.use(new GitlabStrategy({
         clientID: config.gitlabClientId,
         clientSecret: config.gitlabClientSecret,
