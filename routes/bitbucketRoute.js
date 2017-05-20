@@ -1,9 +1,4 @@
 'use strict';
-// const mid = (req, res, next) => {
-//   let id = req.params.id;
-//   passportBitbucket2 = require('../auth/bitbucket')(id);
-//   next();
-// }
 const passportBitbucket = require('../auth/bitbucket')(null);
 let passportBitbucket2 = passportBitbucket;
 module.exports = function(app) {

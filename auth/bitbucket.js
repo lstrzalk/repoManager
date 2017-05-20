@@ -1,6 +1,5 @@
 'use strict';
 module.exports = (id) => {
-  console.log(`ID = ${id}`);
   const config = require('../config/config');
   const passport = require('passport');
   const BitbucketStrategy = require('passport-bitbucket-oauth2').Strategy;
@@ -24,6 +23,7 @@ module.exports = (id) => {
                 console.log(err);
                 return done(err);
               } else {
+                //TODO Check if user is an idiot and want to add account being already logged to it
                 let bbUserData = {
                   username: profile._json.username,
                   website: profile._json.website,
@@ -58,8 +58,10 @@ module.exports = (id) => {
                     bbAccount.save(function(err) {
                       if (err) {
                         console.log(err);
+                        return done(err);
+                      }else{
+                        return done(null, user);
                       }
-                      // saved!
                     });
                   }else {
                     GithubUser.update({user: account.user}, {
@@ -83,7 +85,7 @@ module.exports = (id) => {
                           console.log(err);
                         }
                       });
-                    User.find({_id: account.user}).remove().exec();
+                    User.find({_id: account.user._id}).remove().exec();
                     console.log(user._id);
                     account.user = user._id;
                     account.save(function(err) {
@@ -92,63 +94,83 @@ module.exports = (id) => {
                         console.log(err);
                       }
                     });
-                    return done(null, account);
+                    return done(null, user);
                   }
                 });
               }
             });
 
           }else {
-            let userData = {
-              name: `${profile._json.account_id}BB`
-            };
-            const user = new User(userData);
-            user.save(function(err) {
+            BitbucketUser.findOne({account_id:profile._json.account_id}, function(err, user) {
               if (err) {
                 console.log(err);
-              }
-              console.log('saved');
-            });
-            let bbUserData = {
-              username: profile._json.username,
-              website: profile._json.website,
-              display_name: profile._json.display_name,
-              account_id: profile._json.account_id,
-              hooks: profile._json.hooks,
-              self: profile._json.self,
-              repositories: profile._json.repositories,
-              html: profile._json.html,
-              followers: profile._json.followers,
-              avatar: profile._json.avatar,
-              following: profile._json.following,
-              snippets: profile._json.snippets,
-              created_on: profile._json.created_on,
-              is_staff: profile._json.is_staff,
-              location: profile._json.location,
-              type: profile._json.type,
-              uuid: profile._json.uuid,
-              access_token: accessToken,
-              refresh_token: refreshToken,
-              user: user._id
-            };
-            console.log(user);
-            let searchQuery = {
-                account_id: profile._json.account_id
-              };
+              }else {
+                if(!user){
+                  let userData = {
+                    name: `${profile._json.account_id}BB`
+                  };
+                  const user = new User(userData);
+                  user.save(function(err, user) {
+                    if (err) {
+                      console.log(err);
+                      return done(err);
+                    }else {
+                      let bbUserData = {
+                        username: profile._json.username,
+                        website: profile._json.website,
+                        display_name: profile._json.display_name,
+                        account_id: profile._json.account_id,
+                        hooks: profile._json.hooks,
+                        self: profile._json.self,
+                        repositories: profile._json.repositories,
+                        html: profile._json.html,
+                        followers: profile._json.followers,
+                        avatar: profile._json.avatar,
+                        following: profile._json.following,
+                        snippets: profile._json.snippets,
+                        created_on: profile._json.created_on,
+                        is_staff: profile._json.is_staff,
+                        location: profile._json.location,
+                        type: profile._json.type,
+                        uuid: profile._json.uuid,
+                        access_token: accessToken,
+                        refresh_token: refreshToken,
+                        user: user._id
+                      };
+                      console.log(user._id);
+                      let searchQuery = {
+                          account_id: profile._json.account_id
+                        };
 
-            let options = {
-                upsert: true
-              };
-            BitbucketUser.findOneAndUpdate(searchQuery, bbUserData, options,
-              function(err, user) {
-                if (err) {
-                  console.log('error');
-                  return done(err);
-                } else {
-                  console.log('success');
-                  return done(null, user);
+                      let options = {
+                          upsert: true
+                        };
+                      BitbucketUser.findOneAndUpdate(searchQuery, bbUserData, options,
+                        function(err) {
+                          if (err) {
+                            console.log('error');
+                            return done(err);
+                          } else {
+                            console.log('success');
+                            return done(null, user);
+                          }
+                        });
+                    }
+                    console.log('saved');
+                  });
+                }else {
+                  User.findOne({_id: user.user}, function(err, user){
+                    if (err) {
+                      console.log('error');
+                      return done(err);
+                    } else {
+                      console.log('success');
+                      return done(null, user);
+                    }
+                  });
                 }
-              });
+              }
+            });
           }
 
           // request.get('https://api.bitbucket.org/2.0/repositories?role=owner', {
