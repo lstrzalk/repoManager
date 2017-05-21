@@ -1,0 +1,9 @@
+{
+  "title": "Repo Manager",
+  "menu": {
+    "vcsAccounts": "Konta VCS",
+    "dashboard": "Tablica repozytoriów",
+    "settings": "Ustawienia",
+    "logout": "Wyloguj"
+  }
+}

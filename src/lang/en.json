@@ -1,0 +1,9 @@
+{
+  "title": "Repo Manager",
+  "menu": {
+    "vcsAccounts": "VCS Accounts",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
+}
