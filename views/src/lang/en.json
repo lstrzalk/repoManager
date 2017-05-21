@@ -5,5 +5,10 @@
     "dashboard": "Dashboard",
     "settings": "Settings",
     "logout": "Logout"
+  },
+  "login": {
+    "github": "Login with GitHub",
+    "gitlab": "Login with GitLab",
+    "bitbucket": "Login with Bitbucket"
   }
 }

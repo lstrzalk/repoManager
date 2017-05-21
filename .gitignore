@@ -1,7 +1,2 @@
-.DS_STORE
-*.log
-node_modules
-dist
-coverage
+views/node_modules
 .idea/
-.yarn-cache

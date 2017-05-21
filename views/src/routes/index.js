@@ -4,20 +4,30 @@ import Home from './Home'
 import Accounts from './Accounts'
 import Dashboard from './Dashboard'
 import Settings from './Settings'
+import LoginLayout from '../layouts/LoginLayout/containers/LoginLayoutContainer'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
 
-export const createRoutes = (store) => ({
-  path        : '/',
-  component   : CoreLayout,
-  indexRoute  : Home,
-  childRoutes : [
-    Accounts(store),
-    Dashboard(store),
-    Settings(store)
-  ]
-})
+export const createRoutes = (store) => ([
+  {
+    path: '/',
+    component: CoreLayout,
+    indexRoute: Home,
+    childRoutes: [
+      Accounts(store),
+      Dashboard(store),
+      Settings(store)
+    ]
+  },
+  {
+    path: '/login',
+    component: LoginLayout,
+    indexRoute: Home,
+    childRoutes: [
+    ]
+  }
+])
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
     using getChildRoutes with the following signature:

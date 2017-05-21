@@ -1,3 +1,4 @@
+/** Styles [Material UI components] **/
 import React from 'react'
 import { IndexLink, Link } from 'react-router'
 import PropTypes from 'prop-types'
@@ -10,8 +11,7 @@ import Flag from 'react-flags'
 
 import translate from 'redux-polyglot/translate'
 
-/** Styles [Material UI components] **/
-const navBarStyle = {
+const topBarStyle = {
   height: '64px'
 }
 
@@ -21,19 +21,21 @@ const menuStyle = {
   zIndex: '1301'
 }
 
-const sidePanel = {
+const sidePanelStyle = {
   left: '60px',
   top: '64px'
 }
 
-const menuIconStyle = {
+const menuIcon = {
   marginLeft: '6px',
   marginRight: '6px'
 }
 
-export const PageLayout = ({ children, toggleMenu, setLanguageEn, setLanguagePl, p, logged, menuOpened }) => (
+export const PageLayout = ({
+  children, toggleMenu, setLanguageEn, setLanguagePl, p, logged, menuOpened, setMenuItem
+}) => (
   <div>
-    <AppBar style={navBarStyle} onLeftIconButtonTouchTap={toggleMenu}
+    <AppBar style={topBarStyle} onLeftIconButtonTouchTap={toggleMenu}
       title={
         <IndexLink to='/'>
           {p.t('app.title')}
@@ -51,35 +53,35 @@ export const PageLayout = ({ children, toggleMenu, setLanguageEn, setLanguagePl,
       }
     />
     <Drawer containerStyle={menuStyle} open>
-      <Link to='/accounts' activeClassName='page-layout__nav-item--active'>
-        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.vcsAccounts')} tooltipPosition='bottom-center'
-          iconClassName='material-icons'>
+      <Link to='/accounts'>
+        <IconButton style={menuIcon} tooltip={p.t('app.menu.vcsAccounts')} tooltipPosition='bottom-center'
+          iconClassName='material-icons' key={0} onTouchTap={setMenuItem.bind(null, 0)}>
           group
         </IconButton>
       </Link>
-      <Link to='/dashboard' activeClassName='page-layout__nav-item--active'>
-        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.dashboard')} tooltipPosition='bottom-center'
-          iconClassName='material-icons'>
+      <Link to='/dashboard'>
+        <IconButton style={menuIcon} tooltip={p.t('app.menu.dashboard')} tooltipPosition='bottom-center'
+          iconClassName='material-icons' key={1} onTouchTap={setMenuItem.bind(null, 1)}>
           dashboard
         </IconButton>
       </Link>
-      <Link to='/settings' activeClassName='page-layout__nav-item--active'>
-        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.settings')} tooltipPosition='bottom-center'
-          iconClassName='material-icons'>
+      <Link to='/settings'>
+        <IconButton style={menuIcon} tooltip={p.t('app.menu.settings')} tooltipPosition='bottom-center'
+          iconClassName='material-icons' key={2} onTouchTap={setMenuItem.bind(null, 2)}>
           settings
         </IconButton>
       </Link>
-      <Link to='/logout' activeClassName='page-layout__nav-item--active'>
-        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.logout')} tooltipPosition='bottom-center'
-          iconClassName='material-icons'>
+      <Link to='/logout'>
+        <IconButton style={menuIcon} tooltip={p.t('app.menu.logout')} tooltipPosition='bottom-center'
+          iconClassName='material-icons' key={3} onTouchTap={setMenuItem.bind(null, 3)}>
           input
         </IconButton>
       </Link>
     </Drawer>
-
-    <Drawer containerStyle={sidePanel} open={menuOpened}></Drawer>
-
-    <div className='page-layout__viewport'>
+    <Drawer containerStyle={sidePanelStyle} open={menuOpened}>
+      {/*<MenuItemContent></MenuItemContent>*/}
+    </Drawer>
+    <div>
       {children}
     </div>
   </div>
@@ -90,6 +92,7 @@ PageLayout.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
   setLanguageEn: PropTypes.func.isRequired,
   setLanguagePl: PropTypes.func.isRequired,
+  setMenuItem: PropTypes.func.isRequired,
   p: PropTypes.shape({ t: PropTypes.func.isRequired }).isRequired,
   logged: PropTypes.bool,
   menuOpened: PropTypes.bool

@@ -5,5 +5,10 @@
     "dashboard": "Tablica repozytoriów",
     "settings": "Ustawienia",
     "logout": "Wyloguj"
+  },
+  "login": {
+    "github": "Zaloguj się przez GitHub",
+    "gitlab": "Zaloguj się przez GitLab",
+    "bitbucket": "Zaloguj się przez Bitbucket"
   }
 }
