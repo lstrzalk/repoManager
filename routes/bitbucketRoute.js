@@ -10,9 +10,9 @@ module.exports = function(app) {
     passportBitbucket2.authenticate('bitbucket'));
     app.get('/auth/bitbucket', passportBitbucket.authenticate('bitbucket'));
     app.get('/auth/bitbucket/callback',
-        passportBitbucket.authenticate('bitbucket', {failureRedirect: '/'}),
+        passportBitbucket.authenticate('bitbucket', {failureRedirect: '/auth'}),
         function(req, res) {
             // Successful authentication
-            res.json(req.user);
+            res.redirect('/');
           });
   };

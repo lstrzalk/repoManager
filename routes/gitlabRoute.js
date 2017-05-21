@@ -15,10 +15,10 @@ module.exports = function(app) {
   }));
   app.get('/auth/gitlab/callback',
     passportGitlab.authenticate('gitlab', {
-      failureRedirect: '/'
+      failureRedirect: '/auth'
     }),
     function(req, res) {
       // Successful authentication
-      res.json(req.user);
+      res.redirect('/');
     });
 };

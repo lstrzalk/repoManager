@@ -7,23 +7,24 @@ exports.sendAccounts = (res, id) => {
         user: id
       };
     let accounts = [];
-    GitlabUser.find(searchQuery, function(err, account) {
+    GitlabUser.find(searchQuery, function(err, accountgh) {
       if (err) {
         res.send(err);
-      } else if (account) {
-        accounts.push(account);
+      } else {
+        console.log(accountgh);
+        accounts.push({'Gitlab': accountgh});
       }
-      GithubUser.findOne(searchQuery, function(err, account) {
+      GithubUser.find(searchQuery, function(err, accountgl) {
         if (err) {
           res.send(err);
-        } else if (account) {
-          accounts.push(account);
+        } else {
+          accounts.push({'Github': accountgl});
         }
-        BitbucketUser.findOne(searchQuery, function(err, account) {
+        BitbucketUser.find(searchQuery, function(err, account) {
           if (err) {
             res.send(err);
-          } else if (account) {
-            accounts.push(account);
+          } else {
+            accounts.push({'Bitbucket': account});
           }
           res.send(accounts);
         });

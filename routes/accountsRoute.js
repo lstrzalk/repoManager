@@ -16,7 +16,9 @@ module.exports = function(app) {
           function(req, res, next) {
     passportGitlab = require('../auth/gitlab')(req.user._id);
     next();
-  }, passportGitlab.authenticate('gitlab'));
+  }, passportGitlab.authenticate('gitlab', {
+    scope: ['api']
+  }));
   app.get('/accounts/bitbucket/',
           checkGrants.checkRepos,
           function(req, res, next) {

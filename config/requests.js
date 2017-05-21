@@ -13,7 +13,7 @@ const makeRequest = (account, res, url, refresh) => {
       if (response && response.statusCode >= 400) {
         // if(true){
         if (refresh === null) {
-          res.send(response.body);
+          res.send(body);
         }else {
           refreshToken(account, res, url, refresh);
         }
@@ -40,14 +40,12 @@ const refreshToken = (account, res, url, refresh) => {
       form: json_obj
     }, function(error, response, body) {
     if (response && response.statusCode >= 400) {
-      let msg = {'message': response.body};
+      let msg = {'message': body};
       res.send(msg);
     } else if (response) {
-      // let parsed_res = JSON.parse(response.body);
-      // account.access_token = parsed_res.access_token;
-      // account.refresh_token = parsed_res.refresh_token;
-      account.access_token = body.access_token;
-      account.refresh_token = body.refresh_token;
+      let parsed_res = JSON.parse(response.body);
+      account.access_token = parsed_res.access_token;
+      account.refresh_token = parsed_res.refresh_token;
       account.save(function(err, user) {
         if (err) {
           let msg = {'message': err};
@@ -58,8 +56,8 @@ const refreshToken = (account, res, url, refresh) => {
           //      'bearer': user.access_token
           //    }
           //  },  function(error, response, body) {
-          //      console.log(response);
-          //      res.send(response);
+          //      console.log(body);
+          //      res.send(body);
           //  });
           makeRequest(user, res, url, refresh);
         }
