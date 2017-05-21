@@ -9,7 +9,7 @@ const makeRequest = (account, res, url, refresh) => {
       'Authorization': `Bearer ${account.access_token}`
     }
   };
-  request.get(completeUrl,  function(error, response) {
+  request.get(completeUrl,  function(error, response, body) {
       if (response && response.statusCode >= 400) {
         // if(true){
         if (refresh === null) {
@@ -18,7 +18,7 @@ const makeRequest = (account, res, url, refresh) => {
           refreshToken(account, res, url, refresh);
         }
       } else if (response) {
-        res.send(response);
+        res.send(body);
       } else {
         let msg = {'message': 'ERROR'};
         res.send(msg);
@@ -38,14 +38,16 @@ const refreshToken = (account, res, url, refresh) => {
       headers: {'content-type': 'application/json', 'Authorization': auth},
       url: refresh,
       form: json_obj
-    }, function(error, response) {
+    }, function(error, response, body) {
     if (response && response.statusCode >= 400) {
       let msg = {'message': response.body};
       res.send(msg);
     } else if (response) {
-      let parsed_res = JSON.parse(response.body);
-      account.access_token = parsed_res.access_token;
-      account.refresh_token = parsed_res.refresh_token;
+      // let parsed_res = JSON.parse(response.body);
+      // account.access_token = parsed_res.access_token;
+      // account.refresh_token = parsed_res.refresh_token;
+      account.access_token = body.access_token;
+      account.refresh_token = body.refresh_token;
       account.save(function(err, user) {
         if (err) {
           let msg = {'message': err};

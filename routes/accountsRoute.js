@@ -2,6 +2,7 @@
 let passportGithub = require('../auth/github')(null);
 let passportGitlab = require('../auth/gitlab')(null);
 let passportBitbucket = require('../auth/bitbucket')(null);
+let accountsController = require('../controllers/accountsController');
 const checkGrants = require('../auth/checkGrants');
 module.exports = function(app) {
   app.get('/accounts/github/',
@@ -22,4 +23,8 @@ module.exports = function(app) {
     passportBitbucket = require('../auth/bitbucket')(req.user._id);
     next();
   }, passportBitbucket.authenticate('bitbucket'));
+  app.get('/accounts', checkGrants.checkRepos,
+          function(req, res) {
+            accountsController.sendAccounts(res, req.user._id);
+          });
 };

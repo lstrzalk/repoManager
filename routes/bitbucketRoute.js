@@ -2,9 +2,9 @@
 const passportBitbucket = require('../auth/bitbucket')(null);
 let passportBitbucket2 = passportBitbucket;
 module.exports = function(app) {
-    app.get('/bitbucket/test/:id', function(req, res, next) {
-      let id = req.params.id;
-      passportBitbucket2 = require('../auth/bitbucket')(id);
+    app.get('/bitbucket/test', function(req, res, next) {
+      // let id = req.params.id;
+      passportBitbucket2 = require('../auth/bitbucket')(req.user._id);
       next();
     },
     passportBitbucket2.authenticate('bitbucket'));
