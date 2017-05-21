@@ -1,0 +1,19 @@
+.login-btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-header {
+  cursor: default;
+}
+
+.vcs-icon {
+  float: right;
+  margin: 10px 20px 10px 0;
+}
+
+.logo {
+  width: 220px;
+  margin: 20px;
+}

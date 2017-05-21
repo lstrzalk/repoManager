@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux'
 import locationReducer from './location'
 import { polyglotReducer } from 'redux-polyglot'
-import pageLayoutReducer from '../layouts/PageLayout/modules/pageLayout'
+import mainReducer from '../routes/Main/modules/main'
+import coreLayoutReducer from '../layouts/CoreLayout/modules/coreLayout'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
     polyglot: polyglotReducer,
-    pageLayout: pageLayoutReducer,
+    coreLayout: coreLayoutReducer,
     ...asyncReducers
   })
 }

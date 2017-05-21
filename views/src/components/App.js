@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
+import AppTheme from '../styles/themes/AppTheme'
 
 injectTapEventPlugin()
 
@@ -22,8 +22,8 @@ class App extends React.Component {
   render () {
     return (
       <Provider store={this.props.store}>
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-          <div style={{ height: '100%' }}>
+        <MuiThemeProvider muiTheme={getMuiTheme(AppTheme)}>
+          <div style={{ height: '100%', backgroundColor: '#e8ffbd' }}>
             <Router history={browserHistory} children={this.props.routes} />
           </div>
         </MuiThemeProvider>

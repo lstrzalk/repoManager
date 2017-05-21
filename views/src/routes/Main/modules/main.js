@@ -2,7 +2,6 @@
 // Constants
 // ------------------------------------
 export const SIDE_PANEL_TOGGLE = 'SIDE_PANEL_TOGGLE'
-export const LOGOUT = 'LOGOUT'
 export const SET_MENU_ITEM = 'SET_MENU_ITEM'
 
 // ------------------------------------
@@ -11,12 +10,6 @@ export const SET_MENU_ITEM = 'SET_MENU_ITEM'
 export function toggleMenu () {
   return {
     type  : SIDE_PANEL_TOGGLE
-  }
-}
-
-export function logout () {
-  return {
-    type  : LOGOUT
   }
 }
 
@@ -29,7 +22,6 @@ export function setMenuItem (item) {
 
 export const actions = {
   toggleMenu,
-  logout,
   setMenuItem
 }
 
@@ -38,7 +30,6 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [SIDE_PANEL_TOGGLE]   : (state, action) => Object.assign({}, state, { menuOpened : !state.menuOpened }),
-  [LOGOUT]              : (state, action) => Object.assign({}, state, { logged : !state.logged }),
   [SET_MENU_ITEM]       : (state, action) => Object.assign({}, state, { activeMenuItem : action.activeMenuItem })
 }
 
@@ -46,12 +37,11 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  menuOpened      : false,
-  logged          : true,
+  menuOpened      : true,
   activeMenuItem  : 0
 }
 
-export default function pageLayoutReducer (state = initialState, action) {
+export default function mainReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state
