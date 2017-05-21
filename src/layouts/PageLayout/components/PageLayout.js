@@ -6,7 +6,6 @@ import './PageLayout.scss'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import IconButton from 'material-ui/IconButton'
-import MenuItem from 'material-ui/MenuItem'
 import Flag from 'react-flags'
 
 import translate from 'redux-polyglot/translate'
@@ -17,12 +16,29 @@ const navBarStyle = {
 }
 
 const menuStyle = {
+  top: '64px',
+  width: '60px',
+  zIndex: '1301'
+}
+
+const sidePanel = {
+  left: '60px',
   top: '64px'
+}
+
+const menuIconStyle = {
+  marginLeft: '6px',
+  marginRight: '6px'
 }
 
 export const PageLayout = ({ children, toggleMenu, setLanguageEn, setLanguagePl, p, logged, menuOpened }) => (
   <div>
-    <AppBar style={navBarStyle} title={p.t('app.title')} onLeftIconButtonTouchTap={toggleMenu}
+    <AppBar style={navBarStyle} onLeftIconButtonTouchTap={toggleMenu}
+      title={
+        <IndexLink to='/'>
+          {p.t('app.title')}
+        </IndexLink>
+      }
       iconElementRight={
         <div>
           <IconButton onTouchTap={setLanguageEn} tooltip='English' tooltipPosition='bottom-center'>
@@ -32,17 +48,37 @@ export const PageLayout = ({ children, toggleMenu, setLanguageEn, setLanguagePl,
             <Flag name='PL' format='png' pngSize={32} shiny alt='Polish' />
           </IconButton>
         </div>
-      } />
-    <Drawer containerStyle={menuStyle} open={menuOpened}>
-      <MenuItem>{p.t('app.menu.vcsAccounts')}</MenuItem>
-      <MenuItem>{p.t('app.menu.dashboard')}</MenuItem>
-      <MenuItem>{p.t('app.menu.settings')}</MenuItem>
-      <MenuItem>{p.t('app.menu.logout')}</MenuItem>
+      }
+    />
+    <Drawer containerStyle={menuStyle} open>
+      <Link to='/accounts' activeClassName='page-layout__nav-item--active'>
+        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.vcsAccounts')} tooltipPosition='bottom-center'
+          iconClassName='material-icons'>
+          group
+        </IconButton>
+      </Link>
+      <Link to='/dashboard' activeClassName='page-layout__nav-item--active'>
+        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.dashboard')} tooltipPosition='bottom-center'
+          iconClassName='material-icons'>
+          dashboard
+        </IconButton>
+      </Link>
+      <Link to='/settings' activeClassName='page-layout__nav-item--active'>
+        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.settings')} tooltipPosition='bottom-center'
+          iconClassName='material-icons'>
+          settings
+        </IconButton>
+      </Link>
+      <Link to='/logout' activeClassName='page-layout__nav-item--active'>
+        <IconButton style={menuIconStyle} tooltip={p.t('app.menu.logout')} tooltipPosition='bottom-center'
+          iconClassName='material-icons'>
+          input
+        </IconButton>
+      </Link>
     </Drawer>
 
-    <IndexLink to='/' activeClassName='page-layout__nav-item--active'>Home</IndexLink>
-    {' · '}
-    <Link to='/counter' activeClassName='page-layout__nav-item--active'>Counter</Link>
+    <Drawer containerStyle={sidePanel} open={menuOpened}></Drawer>
+
     <div className='page-layout__viewport'>
       {children}
     </div>
