@@ -1,7 +1,7 @@
 'use strict';
 const request = require('request');
 const config = require('./config');
-exports.makeRequest = (account, res, url, refresh) => {
+const makeRequest = (account, res, url, refresh) => {
   let completeUrl = {
     url: url,
     headers: {
@@ -59,7 +59,7 @@ const refreshToken = (account, res, url, refresh) => {
           //      console.log(response);
           //      res.send(response);
           //  });
-          this.makeRequest(user, res, url, refresh);
+          makeRequest(user, res, url, refresh);
         }
       });
     } else {
@@ -68,3 +68,4 @@ const refreshToken = (account, res, url, refresh) => {
     }
   });
 };
+exports.makeRequest = makeRequest;

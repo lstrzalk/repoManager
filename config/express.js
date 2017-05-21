@@ -7,7 +7,8 @@ const cookieParser = require('cookie-parser');
 const config = require('./config');
 
 module.exports = () => {
-    const app = express();
+    let app = express();
+    app = require('./passport')(app);
     app.use(bodyParser.json());
     app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({extended: false}));
@@ -16,9 +17,9 @@ module.exports = () => {
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html');
     app.use(express.static('views'));
-    require('./passport')(app);
     require('../routes/indexRoute')(app);
     require('../routes/reposRoute')(app);
+    require('../routes/accountsRoute')(app);
     require('../routes/githubRoute')(app);
     require('../routes/gitlabRoute')(app);
     require('../routes/bitbucketRoute')(app);
