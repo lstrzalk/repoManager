@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import { Divider, RaisedButton } from 'material-ui'
+import translate from 'redux-polyglot/translate'
 
 /** Styles [Material UI components] **/
 import './LoginView.scss'
@@ -65,4 +66,4 @@ LoginView.propTypes = {
   p: PropTypes.shape({ t: PropTypes.func.isRequired }).isRequired
 }
 
-export default LoginView
+export default translate(LoginView)

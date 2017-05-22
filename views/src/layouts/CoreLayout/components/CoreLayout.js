@@ -15,7 +15,7 @@ export const CoreLayout = ({ children, setLanguageEn, setLanguagePl, p }) => (
         <Flag name='PL' format='png' pngSize={32} shiny alt='Polish' />
       </IconButton>
     </div>
-    {React.cloneElement(children, { p : p })}
+    {children}
   </div>
 )
 

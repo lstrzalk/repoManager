@@ -28,7 +28,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  logged          : false
+  logged  : false
 }
 
 export default function coreLayoutReducer (state = initialState, action) {

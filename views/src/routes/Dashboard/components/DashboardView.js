@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './AccountsView.scss'
+import './DashboardView.scss'
 import translate from 'redux-polyglot/translate'
 import Main from '../../Main/containers/MainContainer'
 
-export const AccountsView = ({ p }) => (
-  <Main>
-    <h1>{ p.t('app.menu.vcsAccounts') }</h1>
+export const DashboardView = ({ p }) => (
+  <Main p={p} >
+    <h1>{p.t('app.menu.dashboard')}</h1>
   </Main>
 )
 
-AccountsView.propTypes = {
+DashboardView.propTypes = {
   p: PropTypes.shape({ t: PropTypes.func.isRequired }).isRequired,
 }
 
-export default translate(AccountsView)
+export default translate(DashboardView)

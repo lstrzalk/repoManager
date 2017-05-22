@@ -6,6 +6,7 @@ import './Main.scss'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import IconButton from 'material-ui/IconButton'
+import { Paper } from 'material-ui'
 
 import translate from 'redux-polyglot/translate'
 
@@ -17,7 +18,8 @@ const menuStyle = {
   borderRight: '1px solid #406729',
   top: '65px',
   width: '60px',
-  zIndex: '1301'
+  zIndex: '1301',
+  overflow: 'none'
 }
 
 const sidePanelStyle = {
@@ -29,6 +31,22 @@ const sidePanelStyle = {
 const menuIcon = {
   marginLeft: '6px',
   marginRight: '6px'
+}
+
+const mainContentOpenedStyle = {
+  position: 'absolute',
+  top: '114px',
+  bottom: '50px',
+  right: '200px',
+  left: '524px'
+}
+
+const mainContentClosedStyle = {
+  position: 'absolute',
+  top: '114px',
+  bottom: '50px',
+  right: '200px',
+  left: '264px'
 }
 
 export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem }) => (
@@ -55,12 +73,6 @@ export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem 
           group
         </IconButton>
       </Link>
-      <Link to='/settings'>
-        <IconButton style={menuIcon} tooltip={p.t('app.menu.settings')} tooltipPosition='bottom-center'
-          iconClassName='material-icons' key={2} onTouchTap={setMenuItem.bind(null, 2)}>
-          settings
-        </IconButton>
-      </Link>
       <Link to='/login'>
         <IconButton style={menuIcon} tooltip={p.t('app.menu.logout')} tooltipPosition='bottom-center'
           iconClassName='material-icons' key={3} onTouchTap={setMenuItem.bind(null, 3)}>
@@ -69,16 +81,16 @@ export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem 
       </Link>
     </Drawer>
     <Drawer containerStyle={sidePanelStyle} open={menuOpened} />
-    <div>
-      {children}
-    </div>
+    <Paper style={menuOpened ? mainContentOpenedStyle : mainContentClosedStyle} zDepth={5}>
+      { children }
+    </Paper>
   </div>
 )
 
 Main.propTypes = {
   children: PropTypes.node,
-  toggleMenu: PropTypes.func.isRequired,
-  setMenuItem: PropTypes.func.isRequired,
+  toggleMenu: PropTypes.func,
+  setMenuItem: PropTypes.func,
   p: PropTypes.shape({ t: PropTypes.func.isRequired }).isRequired,
   logged: PropTypes.bool,
   menuOpened: PropTypes.bool
