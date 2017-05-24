@@ -38,7 +38,11 @@ const mainContentOpenedStyle = {
   top: '114px',
   bottom: '50px',
   right: '200px',
-  left: '524px'
+  left: '524px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center'
 }
 
 const mainContentClosedStyle = {
@@ -46,7 +50,11 @@ const mainContentClosedStyle = {
   top: '114px',
   bottom: '50px',
   right: '200px',
-  left: '264px'
+  left: '264px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center'
 }
 
 export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem }) => (
@@ -63,18 +71,18 @@ export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem 
       showMenuIconButton={false}
     />
     <Drawer containerStyle={menuStyle} zDepth={0} open>
-      <IconButton style={menuIcon} tooltip={p.t('app.menu.dashboard')} tooltipPosition='bottom-center'
+      <IconButton style={menuIcon} tooltip={p.t('app.menu.dashboard')} tooltipPosition='bottom-right'
         iconClassName='material-icons' key={1} onTouchTap={() => { setMenuItem.bind(null, 1); toggleMenu() }}>
         dashboard
       </IconButton>
       <Link to='/accounts'>
-        <IconButton style={menuIcon} tooltip={p.t('app.menu.vcsAccounts')} tooltipPosition='bottom-center'
+        <IconButton style={menuIcon} tooltip={p.t('app.menu.vcsAccounts')} tooltipPosition='bottom-right'
           iconClassName='material-icons' key={0} onTouchTap={setMenuItem.bind(null, 0)}>
           group
         </IconButton>
       </Link>
       <Link to='/login'>
-        <IconButton style={menuIcon} tooltip={p.t('app.menu.logout')} tooltipPosition='bottom-center'
+        <IconButton style={menuIcon} tooltip={p.t('app.menu.logout')} tooltipPosition='bottom-right'
           iconClassName='material-icons' key={3} onTouchTap={setMenuItem.bind(null, 3)}>
           input
         </IconButton>

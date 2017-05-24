@@ -1,3 +1,6 @@
 views/node_modules
 .idea/
 *.log
+node_modules
+views/dist
+yarn.lock

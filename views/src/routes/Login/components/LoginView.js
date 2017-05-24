@@ -6,6 +6,7 @@ import translate from 'redux-polyglot/translate'
 
 /** Styles [Material UI components] **/
 import './LoginView.scss'
+import { Link } from 'react-router'
 
 const paperStyle = {
   backgroundColor: '#95bf5a',
@@ -28,6 +29,7 @@ const buttonStyle = {
   height: '50px',
   margin: 10,
   lineHeight: '50px',
+  width: 'auto'
 }
 
 const labelStyle = {
@@ -35,7 +37,9 @@ const labelStyle = {
   fontSize: '18px',
   float: 'left',
   padding: '0 10px 0 20px',
-  textTransform: 'none'
+  textTransform: 'none',
+  width: '250px',
+  textAlign: 'left'
 }
 
 export const LoginView = ({ p }) => (
@@ -46,18 +50,24 @@ export const LoginView = ({ p }) => (
       <Divider />
     </div>
     <div className='login-btns'>
-      <RaisedButton label={p.t('app.login.github')} labelStyle={labelStyle} labelPosition='before'
-        style={buttonStyle} backgroundColor='snow'>
-        <img className='vcs-icon' src='img/vcs-logo/github.png' />
-      </RaisedButton>
-      <RaisedButton label={p.t('app.login.gitlab')} labelStyle={labelStyle} labelPosition='before'
-        style={buttonStyle} backgroundColor='snow'>
-        <img className='vcs-icon' src='img/vcs-logo/gitlab.png' />
-      </RaisedButton>
-      <RaisedButton label={p.t('app.login.bitbucket')} labelStyle={labelStyle} labelPosition='before'
-        style={buttonStyle} backgroundColor='snow'>
-        <img className='vcs-icon' src='img/vcs-logo/bitbucket.png' />
-      </RaisedButton>
+      <Link to='/auth/github'>
+        <RaisedButton label={p.t('app.login.github')} labelStyle={labelStyle} labelPosition='before'
+          style={buttonStyle} backgroundColor='snow'>
+          <img className='vcs-icon' src='img/vcs-logo/github.png' />
+        </RaisedButton>
+      </Link>
+      <Link to='/auth/gitlab'>
+        <RaisedButton label={p.t('app.login.gitlab')} labelStyle={labelStyle} labelPosition='before'
+          style={buttonStyle} backgroundColor='snow'>
+          <img className='vcs-icon' src='img/vcs-logo/gitlab.png' />
+        </RaisedButton>
+      </Link>
+      <Link to='/auth/bitbucket'>
+        <RaisedButton label={p.t('app.login.bitbucket')} labelStyle={labelStyle} labelPosition='before'
+          style={buttonStyle} backgroundColor='snow'>
+          <img className='vcs-icon' src='img/vcs-logo/bitbucket.png' />
+        </RaisedButton>
+      </Link>
     </div>
   </Paper>
 )

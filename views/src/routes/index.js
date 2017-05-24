@@ -4,6 +4,10 @@ import Login from './Login'
 import Dashboard from './Dashboard'
 import Settings from './Settings'
 import Accounts from './Accounts'
+import Auth from './Auth'
+
+import en from '../lang/en.json'
+import { setLanguage } from 'redux-polyglot'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -12,11 +16,13 @@ export const createRoutes = (store) => ({
   path: '#',
   component: CoreLayout,
   indexRoute: Dashboard,
+  onEnter : store.dispatch.bind(null, setLanguage('en', { app : en })),
   childRoutes: [
     Accounts(store),
     Dashboard(store),
     Login(store),
-    Settings(store)
+    Settings(store),
+    Auth(store)
   ]
 })
 
