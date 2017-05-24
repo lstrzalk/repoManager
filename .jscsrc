@@ -9,6 +9,7 @@
     "db/models/**",
     "auth/**",
     "config/requests.js",
-    "routes/reposRoute.js"
+    "routes/reposRoute.js",
+    "controllers/reposController.js"
   ]
 }

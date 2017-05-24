@@ -79,7 +79,7 @@ module.exports = (userId) => {
                   });
                 }else {
                   GithubUser.update({user: account.user, id: {$ne: account.id}}, {
-                    user: user._id
+                    ghUserData
                   }, function(err) {
                       if (err) {
                         console.log(err);

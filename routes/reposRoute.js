@@ -14,7 +14,7 @@ module.exports = function(app) {
     app.get('/repos/gitlab/', checkGrants.checkRepos, function(req, res) {
       gitlabController.getRepos(req.user._id, res);
     });
-    app.get('/repos/', checkGrants.checkRepos, function(req, res) {
-      reposController.getRepos(req.user._id, res);
+    app.get('/repos/', checkGrants.checkRepos, function(req) {
+      reposController.getRepos(req.user._id);
     });
   };
