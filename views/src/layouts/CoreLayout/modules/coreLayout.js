@@ -2,6 +2,7 @@
 // Constants
 // ------------------------------------
 export const LOGOUT = 'LOGOUT'
+export const LOGIN = 'LOGIN'
 
 // ------------------------------------
 // Actions
@@ -13,15 +14,23 @@ export function logout () {
   }
 }
 
+export function login () {
+  return {
+    type  : LOGOUT
+  }
+}
+
 export const actions = {
-  logout
+  logout,
+  login
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [LOGOUT]  : (state, action) => Object.assign({}, state, { logged : !state.logged })
+  [LOGOUT]  : (state, action) => Object.assign({}, state, { logged : false }),
+  [LOGIN]   : (state, action) => Object.assign({}, state, { logged : true })
 }
 
 // ------------------------------------

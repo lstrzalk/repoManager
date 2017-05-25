@@ -29,16 +29,21 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [SIDE_PANEL_TOGGLE]   : (state, action) => Object.assign({}, state, { menuOpened : !state.menuOpened }),
-  [SET_MENU_ITEM]       : (state, action) => Object.assign({}, state, { activeMenuItem : action.activeMenuItem })
+  [SIDE_PANEL_TOGGLE]          : (state, action) => Object.assign({}, state, { menuOpened : !state.menuOpened }),
+  [SET_MENU_ITEM]              : (state, action) => Object.assign({}, state, { activeMenuItem : action.activeMenuItem })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-  menuOpened      : true,
-  activeMenuItem  : 0
+  menuOpened      : false,
+  activeMenuItem  : 0,
+  availableRepositories : {
+    github : false,
+    gitlab : false,
+    bitbucket : false
+  }
 }
 
 export default function mainReducer (state = initialState, action) {

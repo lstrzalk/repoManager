@@ -10,5 +10,11 @@
     "github": "Login with GitHub",
     "gitlab": "Login with GitLab",
     "bitbucket": "Login with Bitbucket"
+  },
+  "repositories" : {
+    "name" : "Repositories",
+    "github" : "GitHub",
+    "gitlab" : "GitLab",
+    "bitbucket" : "Bitbucket"
   }
 }

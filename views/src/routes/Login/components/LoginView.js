@@ -3,14 +3,13 @@ import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import { Divider, RaisedButton } from 'material-ui'
 import translate from 'redux-polyglot/translate'
+import './LoginView.scss'
+import { browserHistory } from 'react-router'
 
 /** Styles [Material UI components] **/
-import './LoginView.scss'
-import { Link } from 'react-router'
-
 const paperStyle = {
   backgroundColor: '#95bf5a',
-  borderRadius: '15px',
+  borderRadius: '10px',
   position: 'absolute',
   top: '5%',
   bottom: '5%',
@@ -43,34 +42,33 @@ const labelStyle = {
 }
 
 export const LoginView = ({ p }) => (
-  <Paper style={paperStyle} zDepth={4}>
+  <Paper style={paperStyle} zDepth={5}>
     <div className='login-header'>
       <img className='logo' src='img/logo.png' />
       <h1>{p.t('app.title')}</h1>
       <Divider />
     </div>
     <div className='login-btns'>
-      <Link to='/auth/github'>
-        <RaisedButton label={p.t('app.login.github')} labelStyle={labelStyle} labelPosition='before'
-          style={buttonStyle} backgroundColor='snow'>
-          <img className='vcs-icon' src='img/vcs-logo/github.png' />
-        </RaisedButton>
-      </Link>
-      <Link to='/auth/gitlab'>
-        <RaisedButton label={p.t('app.login.gitlab')} labelStyle={labelStyle} labelPosition='before'
-          style={buttonStyle} backgroundColor='snow'>
-          <img className='vcs-icon' src='img/vcs-logo/gitlab.png' />
-        </RaisedButton>
-      </Link>
-      <Link to='/auth/bitbucket'>
-        <RaisedButton label={p.t('app.login.bitbucket')} labelStyle={labelStyle} labelPosition='before'
-          style={buttonStyle} backgroundColor='snow'>
-          <img className='vcs-icon' src='img/vcs-logo/bitbucket.png' />
-        </RaisedButton>
-      </Link>
+      <RaisedButton label={p.t('app.login.github')} labelStyle={labelStyle} labelPosition='before'
+        style={buttonStyle} backgroundColor='snow' onTouchTap={login.bind(null, 'github')}>
+        <img className='vcs-icon' src='img/vcs-logo/github.png' />
+      </RaisedButton>
+      <RaisedButton label={p.t('app.login.gitlab')} labelStyle={labelStyle} labelPosition='before'
+        style={buttonStyle} backgroundColor='snow' onTouchTap={login.bind(null, 'gitlab')}>
+        <img className='vcs-icon' src='img/vcs-logo/gitlab.png' />
+      </RaisedButton>
+      <RaisedButton label={p.t('app.login.bitbucket')} labelStyle={labelStyle} labelPosition='before'
+        style={buttonStyle} backgroundColor='snow' onTouchTap={login.bind(null, 'bitbucket')}>
+        <img className='vcs-icon' src='img/vcs-logo/bitbucket.png' />
+      </RaisedButton>
     </div>
   </Paper>
 )
+
+function login (vcsName) {
+  browserHistory.push('/auth/' + vcsName)
+  window.location.reload()
+}
 
 LoginView.propTypes = {
   p: PropTypes.shape({ t: PropTypes.func.isRequired }).isRequired

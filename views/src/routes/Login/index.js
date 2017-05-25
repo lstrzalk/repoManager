@@ -1,5 +1,5 @@
 export default (store) => ({
-  path : '/login',
+  path : '/auth',
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
       const Login = require('./containers/LoginViewContainer').default
@@ -8,6 +8,6 @@ export default (store) => ({
       cb(null, Login)
 
       /* Webpack named bundle   */
-    }, 'login')
+    }, 'auth')
   }
 })

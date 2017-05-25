@@ -3,7 +3,9 @@ const MainTheme = {
     fontFamily: 'Comic Sans',
     height: 64,
     padding: 10,
-    zIndex: 1301
+    zIndex: 1301,
+    color: '#95bf5a',
+    textColor: '#355a27'
   },
   palette: {
     alternateTextColor: '#695231',
