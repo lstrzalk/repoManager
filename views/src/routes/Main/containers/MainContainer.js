@@ -2,12 +2,11 @@ import { connect } from 'react-redux'
 import { toggleMenu, setMenuItem } from '../modules/main'
 import Main from '../components/Main'
 
-function getAvailableRepositories (setOwnProps, ownProps) {
+function getAvailableRepositories (setAvailableRepositories, availableRepositories, repositoriesData) {
   const xhttp = new XMLHttpRequest()
   xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-      setOwnProps(JSON.parse(xhttp.responseText), ownProps)
-      console.log(JSON.parse(xhttp.responseText))
+      setAvailableRepositories(JSON.parse(xhttp.responseText), availableRepositories, repositoriesData)
     }
     // TODO CHECK AUTH ON 401
   }
@@ -15,16 +14,23 @@ function getAvailableRepositories (setOwnProps, ownProps) {
   xhttp.send()
 }
 
-let ownProps = {}
-const setOwnProps = (data, ownProps) => {
-  data.map(x => {
-    for (var property in x) {
-      var propertyLower = property.toLowerCase()
-      x[property].length > 0 ? ownProps[propertyLower] = true : ownProps[propertyLower] = false
+let availableRepositories = {}
+let repositoriesData = {}
+const setAvailableRepositories = (data, availableRepositories, repositoriesData) => {
+  data.map(accounts => {
+    for (var vcs in accounts) {
+      var propertyLower = vcs.toLowerCase()
+      console.log(propertyLower)
+      accounts[vcs].length > 0 ? availableRepositories[propertyLower] = true : availableRepositories[propertyLower] = false
+      accounts[vcs].length > 0 ? repositoriesData[propertyLower] = accounts[propertyLower][0] : repositoriesData[propertyLower] = {}
+
+      for (var x in accounts[propertyLower][0]) {
+        console.log(x)
+      }
     }
   })
 }
-getAvailableRepositories(setOwnProps, ownProps)
+getAvailableRepositories(setAvailableRepositories, availableRepositories, repositoriesData)
 
 const mapDispatchToProps = {
   toggleMenu  : () => toggleMenu(),
@@ -34,7 +40,8 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   menuOpened            : state.main.menuOpened,
   activeMenuItem        : state.main.activeMenuItem,
-  availableRepositories : ownProps || state.main.availableRepositories
+  availableRepositories : availableRepositories || state.main.availableRepositories,
+  repositoriesData      : repositoriesData || state.main.repositoriesData
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

@@ -43,6 +43,11 @@ const initialState = {
     github : false,
     gitlab : false,
     bitbucket : false
+  },
+  repositoriesData : {
+    github : {},
+    gitlab : {},
+    bitbucket : {}
   }
 }
 

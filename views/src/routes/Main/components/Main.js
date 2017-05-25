@@ -7,7 +7,7 @@ import './Main.scss'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import IconButton from 'material-ui/IconButton'
-import { List, ListItem, Paper, Subheader } from 'material-ui'
+import { Avatar, List, ListItem, Paper, Subheader } from 'material-ui'
 
 import translate from 'redux-polyglot/translate'
 
@@ -61,7 +61,7 @@ const repoListSubheaderStyle = {
   color: '#355A27'
 }
 
-export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem, availableRepositories }) => (
+export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem, availableRepositories, repositoriesData }) => (
   <div className='app-container' >
     <AppBar style={appBarStyle} zDepth={0}
       title={
@@ -91,21 +91,28 @@ export const Main = ({ children, toggleMenu, p, logged, menuOpened, setMenuItem,
           input
         </IconButton>
       </Link>
+      <Avatar src={repositoriesData.github.avatar_url} />
     </Drawer>
     <Drawer containerStyle={sidePanelStyle} open={menuOpened} >
       <List>
         <Subheader style={repoListSubheaderStyle}>{p.t('app.repositories.name')}</Subheader>
         {
           availableRepositories.github ? <ListItem primaryText={p.t('app.repositories.github')}
-            leftIcon={<img className='vcs-icon' src='img/vcs-logo/github.png' />} /> : null
+            leftIcon={<img className='vcs-icon' src='img/vcs-logo/github.png'
+              nestedItems={[]}
+            />} /> : null
         }
         {
           availableRepositories.gitlab ? <ListItem primaryText={p.t('app.repositories.gitlab')}
-            leftIcon={<img className='vcs-icon' src='img/vcs-logo/gitlab.png' />} /> : null
+            leftIcon={<img className='vcs-icon' src='img/vcs-logo/gitlab.png'
+              nestedItems={[]}
+            />} /> : null
         }
         {
           availableRepositories.bitbucket ? <ListItem primaryText={p.t('app.repositories.bitbucket')}
-            leftIcon={<img className='vcs-icon' src='img/vcs-logo/bitbucket.png' />} /> : null
+            leftIcon={<img className='vcs-icon' src='img/vcs-logo/bitbucket.png'
+              nestedItems={[]}
+            />} /> : null
         }
       </List>
     </Drawer>
@@ -124,7 +131,8 @@ Main.propTypes = {
   p: PropTypes.shape({ t: PropTypes.func.isRequired }).isRequired,
   logged: PropTypes.bool,
   menuOpened: PropTypes.bool,
-  availableRepositories: PropTypes.object
+  availableRepositories: PropTypes.object,
+  repositoriesData : PropTypes.object
 }
 
 export default translate(Main)
