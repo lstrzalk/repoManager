@@ -14,7 +14,9 @@ const GitlabRepo = new Schema({
     owner: String,
     name: String,
     created_at: String,
-    last_activity_at: String
+    last_activity_at: String,
+    star_count: Number,
+    forks_count: Number,
 });
 
 module.exports = mongoose.model('gitlabRepo', GitlabRepo);

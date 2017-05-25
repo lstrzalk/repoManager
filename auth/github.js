@@ -7,7 +7,9 @@ module.exports = (userId) => {
   const BitbucketUser = require('../db/models/bitbucketUser');
   const GithubUser = require('../db/models/githubUser');
   const GitlabUser = require('../db/models/gitlabUser');
+  const Repo = require('../db/models/repo');
   const init = require('./init');
+  const reposController = require('../controllers/reposController.js');
   passport.use(new GithubStrategy({
       clientID: config.githubClienId,
       clientSecret: config.githubClientSecret,
@@ -99,6 +101,13 @@ module.exports = (userId) => {
                         console.log(err);
                       }
                     });
+                  Repo.update({user: account.user._id}, {
+                    user: user._id
+                  }, function(err) {
+                      if (err) {
+                        console.log(err);
+                      }
+                    });
                   User.find({_id: account.user._id}).remove().exec();
                   account.user = user._id;
                   account.save(function(err) {
@@ -112,6 +121,7 @@ module.exports = (userId) => {
               });
             }
           });
+          reposController.getRepos(userId);
         }else{
           GithubUser.findOne({id:profile._json.id}, function(err, user) {
             if (err) {
@@ -128,6 +138,7 @@ module.exports = (userId) => {
                     console.log(err);
                     return done(err);
                   }else {
+                    reposController.getRepos(userId);
                     let ghUserData = {
                       login: profile._json.login,
                       id: profile._json.id,

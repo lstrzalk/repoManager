@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config');
-
 module.exports = () => {
     let app = express();
     app = require('./passport')(app);

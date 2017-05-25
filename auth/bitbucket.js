@@ -7,7 +7,9 @@ module.exports = (id) => {
   const BitbucketUser = require('../db/models/bitbucketUser');
   const GithubUser = require('../db/models/githubUser');
   const GitlabUser = require('../db/models/gitlabUser');
+  const Repo = require('../db/models/repo');
   const init = require('./init');
+  const reposController = require('../controllers/reposController.js');
   passport.use(new BitbucketStrategy({
       clientID: config.bitbucketClienId,
       clientSecret: config.bitbucketClientSecret,
@@ -81,6 +83,13 @@ module.exports = (id) => {
                           console.log(err);
                         }
                       });
+                  Repo.update({user: account.user._id}, {
+                    user: user._id
+                  }, function(err) {
+                      if (err) {
+                        console.log(err);
+                      }
+                    });
                     User.find({_id: account.user._id}).remove().exec();
                     console.log(user._id);
                     account.user = user._id;
@@ -95,7 +104,7 @@ module.exports = (id) => {
                 });
               }
             });
-
+            reposController.getRepos(id);
           }else {
             BitbucketUser.findOne({account_id:profile._json.account_id}, function(err, user) {
               if (err) {
@@ -111,6 +120,7 @@ module.exports = (id) => {
                       console.log(err);
                       return done(err);
                     }else {
+                      reposController.getRepos(user._id);
                       let bbUserData = {
                         username: profile._json.username,
                         website: profile._json.website,

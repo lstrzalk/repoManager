@@ -4,6 +4,7 @@ exports.checkRepos = (req, res, next) => {
     if (req.isAuthenticated()){
       return next();
     }else {
-      res.redirect('/auth');
+      res.status(401);
+      res.send();
   }
 };
