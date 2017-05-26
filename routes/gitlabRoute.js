@@ -1,5 +1,5 @@
 'use strict';
-const passportGitlab = require('../auth/gitlab')(null);
+const passportGitlab = require('../auth/gitlab')(-1);
 let passportGitlab2 = passportGitlab;
 module.exports = function(app) {
   app.get('/gitlab/test', function(req, res, next) {

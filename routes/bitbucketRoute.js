@@ -1,5 +1,5 @@
 'use strict';
-const passportBitbucket = require('../auth/bitbucket')(null);
+const passportBitbucket = require('../auth/bitbucket')(-1);
 let passportBitbucket2 = passportBitbucket;
 module.exports = function(app) {
     app.get('/bitbucket/test', function(req, res, next) {

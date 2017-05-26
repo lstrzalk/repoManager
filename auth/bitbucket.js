@@ -7,15 +7,15 @@ module.exports = (id) => {
   const BitbucketUser = require('../db/models/bitbucketUser');
   const GithubUser = require('../db/models/githubUser');
   const GitlabUser = require('../db/models/gitlabUser');
-  const Repo = require('../db/models/repo');
+  const RepoUser = require('../db/models/repoUser');
   const init = require('./init');
-  const reposController = require('../controllers/reposController.js');
+  const refreshRepos = require('../db/refreshRepos');
   passport.use(new BitbucketStrategy({
       clientID: config.bitbucketClienId,
       clientSecret: config.bitbucketClientSecret,
       callbackURL: 'http://localhost:3000/auth/bitbucket/callback'
     }, function(accessToken, refreshToken, profile, done) {
-          if (id !== null) {
+          if (id !== -1) {
             User.findById(id, function(err, user) {
               if (err) {
                 console.log(err);
@@ -53,58 +53,59 @@ module.exports = (id) => {
                   }
                   if (!account) {
                     let bbAccount = new BitbucketUser(bbUserData);
-                    bbAccount.save(function(err) {
+                    bbAccount.save(function(err, account) {
                       if (err) {
                         console.log(err);
                         return done(err);
                       }else{
+                        refreshRepos.getRepos(account.user);
                         return done(null, user);
                       }
                     });
                   }else {
                     GithubUser.update({user: account.user}, {
                       user: user._id
-                    }, function(err) {
+                    },{multi: true}, function(err) {
                         if (err) {
                           console.log(err);
                         }
                       });
                     BitbucketUser.update({user: account.user, account_id: {$ne: account.account_id}}, {
                       user: user._id
-                    }, function(err) {
+                    },{multi: true}, function(err) {
                         if (err) {
                           console.log(err);
                         }
                       });
                     GitlabUser.update({user: account.user}, {
                       user: user._id
-                    }, function(err) {
+                    },{multi: true}, function(err) {
                         if (err) {
                           console.log(err);
                         }
                       });
-                  Repo.update({user: account.user._id}, {
+                  RepoUser.update({user: account.user}, {
                     user: user._id
-                  }, function(err) {
+                  },{multi: true}, function(err) {
                       if (err) {
                         console.log(err);
                       }
                     });
-                    User.find({_id: account.user._id}).remove().exec();
-                    console.log(user._id);
+                    User.find({_id: account.user}).remove().exec();
                     account.user = user._id;
-                    account.save(function(err) {
-                      if (err) {
-                        console.log('error');
+                    account.save()
+                      .then(()=>{
+                        refreshRepos.getRepos(account.user);
+                        return done(null, user);
+                    })
+                      .catch((err) => {
                         console.log(err);
-                      }
+                        return done(err);
                     });
-                    return done(null, user);
                   }
                 });
               }
             });
-            reposController.getRepos(id);
           }else {
             BitbucketUser.findOne({account_id:profile._json.account_id}, function(err, user) {
               if (err) {
@@ -120,7 +121,7 @@ module.exports = (id) => {
                       console.log(err);
                       return done(err);
                     }else {
-                      reposController.getRepos(user._id);
+                      refreshRepos.getRepos(user._id);
                       let bbUserData = {
                         username: profile._json.username,
                         website: profile._json.website,
@@ -143,51 +144,34 @@ module.exports = (id) => {
                         refresh_token: refreshToken,
                         user: user._id
                       };
-                      console.log(user._id);
-                      let searchQuery = {
-                          account_id: profile._json.account_id
-                        };
-
-                      let options = {
-                          upsert: true
-                        };
-                      BitbucketUser.findOneAndUpdate(searchQuery, bbUserData, options,
-                        function(err) {
-                          if (err) {
-                            console.log('error');
-                            return done(err);
-                          } else {
-                            console.log('success');
-                            return done(null, user);
-                          }
+                      new BitbucketUser(bbUserData).save()
+                        .then(() => {
+                          refreshRepos.getRepos(user._id);
+                          return done(null, user);
+                        })
+                        .catch((err) => {
+                          console.log('error');
+                          return done(err);
                         });
                     }
-                    console.log('saved');
                   });
                 }else {
-                  User.findOne({_id: user.user}, function(err, user){
-                    if (err) {
-                      console.log('error');
-                      return done(err);
-                    } else {
+                  console.log(user);
+                  User.findOne({_id: user.user})
+                    .then((user) => {
+                      console.log(user);
                       console.log('success');
+                      refreshRepos.getRepos(user._id);
                       return done(null, user);
-                    }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      return done(err);
                   });
                 }
               }
             });
           }
-
-          // request.get('https://api.bitbucket.org/2.0/repositories?role=owner', {
-          //   'auth': {
-          //     'bearer': accessToken
-          //   }},  function (error, response, body) {
-          //     console.log('error:', error); // Print the error if one occurred
-          //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-          //     console.log('body:', body); // Print the HTML for the Google homepage.
-          //   }
-          // );
         }));
   init();
   return passport;

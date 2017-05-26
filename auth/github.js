@@ -7,15 +7,15 @@ module.exports = (userId) => {
   const BitbucketUser = require('../db/models/bitbucketUser');
   const GithubUser = require('../db/models/githubUser');
   const GitlabUser = require('../db/models/gitlabUser');
-  const Repo = require('../db/models/repo');
+  const RepoUser = require('../db/models/repoUser');
   const init = require('./init');
-  const reposController = require('../controllers/reposController.js');
+  const refreshRepos = require('../db/refreshRepos');
   passport.use(new GithubStrategy({
       clientID: config.githubClienId,
       clientSecret: config.githubClientSecret,
       callbackURL: 'http://localhost:3000/auth/github/callback'
   }, function(accessToken, refreshToken, profile, done) {
-        if (userId !== null) {
+        if (userId !== -1) {
           User.findById(userId, function(err, user) {
             if (err) {
               console.log(err);
@@ -76,52 +76,55 @@ module.exports = (userId) => {
                       console.log(err);
                       return done(err);
                     }else{
-                      return done(null, account);
+                      refreshRepos.getRepos(account.user);
+                      return done(null, user);
                     }
                   });
                 }else {
                   GithubUser.update({user: account.user, id: {$ne: account.id}}, {
                     ghUserData
-                  }, function(err) {
+                  },{multi: true}, function(err) {
                       if (err) {
                         console.log(err);
                       }
                     });
                   BitbucketUser.update({user: account.user}, {
                     user: user._id
-                  }, function(err) {
+                  },{multi: true}, function(err) {
                       if (err) {
                         console.log(err);
                       }
                     });
                   GitlabUser.update({user: account.user}, {
                     user: user._id
-                  }, function(err) {
+                  },{multi: true}, function(err) {
                       if (err) {
                         console.log(err);
                       }
                     });
-                  Repo.update({user: account.user._id}, {
+                  RepoUser.update({user: account.user}, {
                     user: user._id
-                  }, function(err) {
+                  },{multi: true}, function(err) {
                       if (err) {
                         console.log(err);
                       }
                     });
-                  User.find({_id: account.user._id}).remove().exec();
+                  User.find({_id: account.user}).remove().exec();
                   account.user = user._id;
-                  account.save(function(err) {
-                    if (err) {
-                      console.log('error');
+                  account.save()
+                    .then(()=>{
+                      refreshRepos.getRepos(account.user);
+                      return done(null, user);
+                  })
+                    .catch((err) => {
                       console.log(err);
-                    }
-                  });
-                  return done(null, user);
+                      return done(err);
+                    });
+
                 }
               });
             }
           });
-          reposController.getRepos(userId);
         }else{
           GithubUser.findOne({id:profile._json.id}, function(err, user) {
             if (err) {
@@ -138,7 +141,6 @@ module.exports = (userId) => {
                     console.log(err);
                     return done(err);
                   }else {
-                    reposController.getRepos(userId);
                     let ghUserData = {
                       login: profile._json.login,
                       id: profile._json.id,
@@ -179,36 +181,28 @@ module.exports = (userId) => {
                       refresh_token: refreshToken,
                       user: user._id
                     };
-                    console.log(user._id);
-                    let searchQuery = {
-                        id: profile._json.id
-                      };
-
-                    let options = {
-                        upsert: true
-                      };
-                    GithubUser.findOneAndUpdate(searchQuery, ghUserData, options,
-                      function(err) {
-                        if (err) {
-                          console.log('error');
-                          return done(err);
-                        } else {
-                          console.log('success');
-                          return done(null, user);
-                        }
+                    new GithubUser(ghUserData).save()
+                      .then(() => {
+                        refreshRepos.getRepos(user._id);
+                        return done(null, user);
+                      })
+                      .catch((err) => {
+                        console.log('error');
+                        return done(err);
                       });
                     }
                 });
               } else {
-                User.findOne({_id: user.user}, function(err, user){
-                  if (err) {
-                    console.log('error');
-                    return done(err);
-                  } else {
+                User.findOne({_id: user.user})
+                  .then((user) => {
                     console.log('success');
+                    refreshRepos.getRepos(user._id);
                     return done(null, user);
-                  }
-                });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    return done(err);
+                  });
               }
             }
           });
