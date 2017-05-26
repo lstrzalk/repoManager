@@ -7,7 +7,7 @@ export default (store) => ({
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
       const Main = require('../Dashboard/containers/DashboardViewContainer').default
-      const reducer = require('../Main/modules/main').default
+      const reducer = require('../../components/Main/modules/main').default
       injectReducer(store, { key: 'main', reducer })
       cb(null, Main)
     }, 'main')
@@ -26,7 +26,6 @@ function isAuthorized (store) {
     if (this.status === 401) {
       console.log('redirecting to auth...')
       browserHistory.push('/auth')
-      window.location.reload()
     }
   }
   xhttp.open('GET', '/auth', true)
@@ -43,7 +42,6 @@ function getGitHubRepositories (store) {
     if (this.status === 401) {
       console.log('redirecting to auth...')
       browserHistory.push('/auth')
-      window.location.reload()
     }
   }
   xhttpGitHub.open('GET', 'repos/github', true)
@@ -60,7 +58,6 @@ function getGitLabRepositories (store) {
     if (this.status === 401) {
       console.log('redirecting to auth...')
       browserHistory.push('/auth')
-      window.location.reload()
     }
   }
   xhttpGitLab.open('GET', 'repos/gitlab', true)
@@ -77,7 +74,6 @@ function getBitbucketRepositories (store) {
     if (this.status === 401) {
       console.log('redirecting to auth...')
       browserHistory.push('/auth')
-      window.location.reload()
     }
   }
   xhttpBitbucket.open('GET', 'repos/bitbucket', true)

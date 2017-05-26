@@ -4,3 +4,4 @@ views/node_modules
 node_modules
 views/dist
 yarn.lock
+repoManager

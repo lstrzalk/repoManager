@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './SettingsView.scss'
 import translate from 'redux-polyglot/translate'
-import Main from '../../Main/components/Main'
+import Main from '../../../components/Main/Main'
 
 export const SettingsView = ({ p }) => (
   <Main>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleMenu, setMenuItem } from '../../Main/modules/main'
+import { toggleMenu, setMenuItem } from '../../../components/Main/modules/main'
 
 import DashboardView from '../components/DashboardView'
 

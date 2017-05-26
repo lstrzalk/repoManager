@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './DashboardView.scss'
 import translate from 'redux-polyglot/translate'
-import Main from '../../Main/containers/MainContainer'
+import Main from '../../../components/Main/containers/MainContainer'
 
 export const DashboardView = ({ p }) => (
   <Main p={p} >
