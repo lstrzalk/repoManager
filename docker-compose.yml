@@ -1,0 +1,15 @@
+# create a docker-compose.yml file
+version: "2"
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+  web:
+    build: .
+    volumes:
+      - .:/repoManager
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo

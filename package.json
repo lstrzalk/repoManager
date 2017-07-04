@@ -9,7 +9,8 @@
     "jshint": "jshint .",
     "jscs": "jscs . --fix",
     "lint": "jshint .",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "pre-commit": [
     "jshint",
@@ -29,6 +30,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "chai": "^4.0.2",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.6",
     "express": "~4.15.0",
@@ -36,6 +38,7 @@
     "gitlab": "^1.7.1",
     "gitlab-api-client": "^1.0.2",
     "logger": "0.0.1",
+    "mocha": "^3.4.2",
     "mongoose": "^4.8.6",
     "morgan": "^1.8.1",
     "nodemon": "~1.11.0",

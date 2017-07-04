@@ -13,7 +13,7 @@ module.exports = (id) => {
   passport.use(new BitbucketStrategy({
       clientID: config.bitbucketClienId,
       clientSecret: config.bitbucketClientSecret,
-      callbackURL: 'http://localhost:3000/auth/bitbucket/callback'
+      callbackURL: 'http://192.168.99.100:3000/auth/bitbucket/callback'
     }, function(accessToken, refreshToken, profile, done) {
           if (id !== -1) {
             User.findById(id, function(err, user) {

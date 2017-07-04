@@ -13,7 +13,7 @@ module.exports = (userId) => {
   passport.use(new GithubStrategy({
       clientID: config.githubClienId,
       clientSecret: config.githubClientSecret,
-      callbackURL: 'http://localhost:3000/auth/github/callback'
+      callbackURL: 'http://192.168.99.100:3000/auth/github/callback'
   }, function(accessToken, refreshToken, profile, done) {
         if (userId !== -1) {
           User.findById(userId, function(err, user) {
