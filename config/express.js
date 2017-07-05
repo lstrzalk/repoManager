@@ -12,10 +12,14 @@ module.exports = () => {
     app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(cookieParser());
-    app.set('views', './views');
+    // app.set('views', './views');
+    // app.engine('html', require('ejs').renderFile);
+    // app.set('view engine', 'html');
+    // app.use(express.static('views'));
+    app.set('views', './views/dist');
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html');
-    app.use(express.static('views'));
+    app.use(express.static('./views/dist'));
     require('../routes/indexRoute')(app);
     require('../routes/reposRoute')(app);
     require('../routes/accountsRoute')(app);
