@@ -13,7 +13,8 @@ module.exports = (userId) => {
   passport.use(new GitlabStrategy({
         clientID: config.gitlabClientId,
         clientSecret: config.gitlabClientSecret,
-        callbackURL: 'http://192.168.99.100:3000/auth/gitlab/callback'
+        // callbackURL: 'http://192.168.99.100:3000/auth/gitlab/callback'
+        callbackURL: 'http://localhost:3000/auth/gitlab/callback'
   }, function(accessToken, refreshToken, profile, done) {
         if (userId !== -1) {
           User.findById(userId, function(err, user) {
