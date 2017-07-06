@@ -1,0 +1,29 @@
+.languages-container {
+  margin: 0;
+}
+
+.small-logo {
+  width: 40px;
+  margin: 5px 15px 5px 0;
+
+}
+
+.app-title-header {
+  cursor: default;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.app-container {
+  background-color: #c7f289;
+}
+
+.content-container {
+  position: relative;
+  top: 50px;
+  bottom: 50px;
+  right: 50px;
+  left: 200px;
+  height: 100%;
+  border-radius: 5px;
+  border: 2px solid;
+}

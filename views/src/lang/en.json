@@ -1,0 +1,22 @@
+{
+  "title": "Repo Manager",
+  "menu": {
+    "vcsAccounts": "VCS Accounts",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "login": {
+    "github": "Login with GitHub",
+    "gitlab": "Login with GitLab",
+    "bitbucket": "Login with Bitbucket"
+  },
+  "repositories" : {
+    "name" : "Repositories",
+    "github" : "GitHub",
+    "gitlab" : "GitLab",
+    "bitbucket" : "Bitbucket",
+    "add" : "Add repository",
+    "goto": "Go to repository"
+  }
+}

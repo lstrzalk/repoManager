@@ -197,6 +197,7 @@ module.exports = (userId) => {
                 User.findOne({_id: user.user})
                   .then((user) => {
                     console.log('success');
+                    console.log(user)
                     refreshRepos.getRepos(user._id);
                     return done(null, user);
                   })

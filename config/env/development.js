@@ -1,6 +1,6 @@
 module.exports = {
   // db: 'mongodb://172.17.0.1/repoManager',
-  db: 'mongodb://localhost/repoManager',
+  db: 'mongodb://172.17.0.1/repoManager',
   port: 3000,
   githubClienId: '77542bc99fdfa6772529',
   githubClientSecret: '6cfd95a96b0fdd77e5e76e725f4a6ee7aa13b68f',
