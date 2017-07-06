@@ -9,14 +9,12 @@ const githubUrl = 'http://localhost:3000/auth/github';
 const gitlabUrl = 'http://localhost:3000/auth/gitlab';
 const bitbucketUrl = 'http://localhost:3000/auth/bitbucket';
 
-
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../config/express.js');
 let should = chai.should();
 
 chai.use(chaiHttp);
-
 
 describe('Main Page test', () => {
     it('loading main page', () => {
@@ -54,7 +52,7 @@ describe('Bitbucket test', () => {
                 res.should.have.status(302);
                 // res.body.should.be.a('array');
                 res.body.length.should.be.eql(0);
-              done();
-            });
+                done();
+              });
       });
   });

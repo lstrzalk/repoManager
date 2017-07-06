@@ -2,3 +2,4 @@ node_modules
 controllers/reposController.js
 db/refreshRepos.js
 test
+views
